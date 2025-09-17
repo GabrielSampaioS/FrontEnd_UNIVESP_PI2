@@ -4,7 +4,7 @@ const API_URL = 'http://localhost:3001/clientes';
 
 //Cadastrar e localixar user
 export const criarCliente = (data) => axios.post(API_URL, data);
-export const localizarClientes = (nome) => axios.get(`${API_URL}/localizar`, { params: { nome } });
+export const localizarClientes = (nome, cpf) => axios.get(`${API_URL}/localizar`, { params: { nome, cpf} });
 
 //trazer historico
 export const obterHistorico = (aggregate_id) => axios.get(`${API_URL}/historico`, { params: { aggregate_id } }); 

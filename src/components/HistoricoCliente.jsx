@@ -1,4 +1,4 @@
-export default function HistoricoCliente({ historico }) {
+export default function HistoricoCliente({ historico, saldo }) {
   if (!historico || historico.length === 0) return <p>Nenhum histórico encontrado.</p>;
 
   return (
@@ -14,6 +14,7 @@ export default function HistoricoCliente({ historico }) {
           </li>
         ))}
       </ul>
+      <p><strong>Saldo atual:</strong> R$ {saldo}</p>
     </div>
   );
 }

@@ -5,20 +5,22 @@ import HistoricoCliente from './HistoricoCliente';
 
 export default function LocalizarCliente() {
   const [nomeBusca, setNomeBusca] = useState('');
+  const [cpfBusca, setCpfBusca] = useState('');
   const [clientes, setClientes] = useState([]);
   const [historicoPorCliente, setHistoricoPorCliente] = useState({});
   const [mostrarHistoricoId, setMostrarHistoricoId] = useState(null);
 
-  const handleBuscar = async () => {
-    const res = await localizarClientes(nomeBusca);
+  const handleBuscarCLientes = async () => {
+    const res = await localizarClientes(nomeBusca, cpfBusca);
     setClientes(res.data);
     setHistoricoPorCliente({});
     setMostrarHistoricoId(null);
   };
 
+  // esconde se já está aberto
   const handleVerHistorico = async (aggregate_id) => {
     if (mostrarHistoricoId === aggregate_id) {
-      setMostrarHistoricoId(null); // esconde se já está aberto
+      setMostrarHistoricoId(null); 
       return;
     }
 
@@ -40,7 +42,13 @@ export default function LocalizarCliente() {
         onChange={e => setNomeBusca(e.target.value)}
         className="input-busca"
       />
-      <button onClick={handleBuscar} className="btn-busca">Buscar</button>
+      <input 
+        placeholder='CPF'
+        value={cpfBusca}
+        onChange={e => setCpfBusca(e.target.value)}
+        className='input-busca'  
+      />
+      <button onClick={handleBuscarCLientes} className="btn-busca">Buscar</button>
 
       <ul className="lista-clientes">
         {clientes.map(c => (
@@ -65,7 +73,10 @@ export default function LocalizarCliente() {
             </div>
 
             {mostrarHistoricoId === c.aggregate_id && (
-              <HistoricoCliente historico={historicoPorCliente[c.aggregate_id]} />
+              <HistoricoCliente
+                historico={historicoPorCliente[c.aggregate_id]?.historico || []}
+                saldo={historicoPorCliente[c.aggregate_id]?.saldo}
+              />
             )}
           </li>
         ))}
