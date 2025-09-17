@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001/clientes';
+const API_URL = import.meta.env.VITE_API_URL + '/clientes'; 
 
 //Cadastrar e localixar user
 export const criarCliente = (data) => axios.post(API_URL, data);
