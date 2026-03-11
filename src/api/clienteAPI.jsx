@@ -1,14 +1,34 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL + '/clientes'; 
+const API_URL = import.meta.env.VITE_API_URL + "/clientes";
 
-//Cadastrar e localixar user
-export const criarCliente = (data) => axios.post(API_URL, data);
-export const localizarClientes = (nome, cpf) => axios.get(`${API_URL}/localizar`, { params: { nome, cpf} });
+// cadastrar cliente
+export const criarCliente = (data) => {
+  return axios.post(API_URL, data);
+};
 
-//trazer historico
-export const obterHistorico = (aggregate_id) => axios.get(`${API_URL}/historico`, { params: { aggregate_id } }); 
+// localizar clientes
+export const localizarClientes = (nome, cpf) => {
+  return axios.get(`${API_URL}/`, {
+    params: { nome, cpf },
+  });
+};
 
-//Atulizar valores
-export const registrarDivida = (aggregate_id, valor) => axios.post(`${API_URL}/divida`, { aggregate_id, valor });
-export const registrarPagamento = (aggregate_id, valor) => axios.post(`${API_URL}/pagamento`, { aggregate_id, valor });
+// obter histórico
+export const obterHistorico = (aggregate_id) => {
+  return axios.get(`${API_URL}/${aggregate_id}/eventos`);
+};
+
+// registrar dívida
+export const registrarDivida = (aggregate_id, valor) => {
+  return axios.post(`${API_URL}/${aggregate_id}/dividas`, {
+    valor,
+  });
+};
+
+// registrar pagamento
+export const registrarPagamento = (aggregate_id, valor) => {
+  return axios.post(`${API_URL}/${aggregate_id}/pagamentos`, {
+    valor,
+  });
+};

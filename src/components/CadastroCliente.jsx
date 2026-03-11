@@ -10,6 +10,7 @@ export default function CadastroCliente() {
 
   const handleCadastrar = async () => {
     try {
+
       await criarCliente({ nome, sobrenome, telefone, cpf, email });
       alert('Cliente cadastrado com sucesso!');
       setNome(''); setSobrenome(''); setTelefone(''); setCpf(''); setEmail('');
