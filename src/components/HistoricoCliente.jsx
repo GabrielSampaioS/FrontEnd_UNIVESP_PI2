@@ -14,7 +14,7 @@ export default function HistoricoCliente({ historico, saldo }) {
           </li>
         ))}
       </ul>
-      <p><strong>Saldo atual:</strong> R$ {saldo}</p>
+      <p><strong>Divida Atual:</strong> R$ {saldo}</p>
     </div>
   );
 }

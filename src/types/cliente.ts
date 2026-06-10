@@ -6,6 +6,7 @@ export interface Cliente {
   email: string;
 }
 
+
 export interface Evento {
   aggregate_id: string;
   event_type: string;

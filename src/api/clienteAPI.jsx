@@ -20,15 +20,41 @@ export const obterHistorico = (aggregate_id) => {
 };
 
 // registrar dívida
-export const registrarDivida = (aggregate_id, valor) => {
-  return axios.post(`${API_URL}/${aggregate_id}/dividas`, {
-    valor,
-  });
+export const registrarDivida = (
+  aggregate_id,
+  valor,
+  descricao
+) => {
+  return axios.post(
+    `${API_URL}/${aggregate_id}/dividas`,
+    {
+      valor,
+      descricao,
+    }
+  );
 };
 
 // registrar pagamento
-export const registrarPagamento = (aggregate_id, valor) => {
-  return axios.post(`${API_URL}/${aggregate_id}/pagamentos`, {
-    valor,
-  });
+export const registrarPagamento = (
+  aggregate_id,
+  valor,
+  forma_pagamento
+) => {
+
+  console.log(
+    "Registrando pagamento:",
+    {
+      aggregate_id,
+      valor,
+      forma_pagamento
+    }
+  );
+
+  return axios.post(
+    `${API_URL}/${aggregate_id}/pagamentos`,
+    {
+      valor,
+      forma_pagamento
+    }
+  );
 };
