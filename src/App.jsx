@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import './App.css';
 import CadastroCliente from './components/CadastroCliente';
 import LocalizarCliente from './components/LocalizarCliente';
+import Login from './components/Login';
+import Register from './components/Register';
 
 function App() {
-  const [logado, setLogado] = useState(false);
+  const [logado, setLogado] = useState(!!localStorage.getItem('token'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setLogado(false);
+  };
 
   return (
     <Router>
@@ -16,30 +23,56 @@ function App() {
             <h1>Bar da Filó SaaS</h1>
           </div>
           <nav className="header-nav">
-            <Link to="/cadastro" className="nav-link">Cadastrar Cliente</Link>
-            <Link to="/historico" className="nav-link">Histórico / Buscar Cliente</Link>
+            {logado && (
+              <>
+                <Link to="/cadastro" className="nav-link">Cadastrar Cliente</Link>
+                <Link to="/historico" className="nav-link">Histórico / Buscar Cliente</Link>
+              </>
+            )}
           </nav>
-          <div className="header-right">
-            <button onClick={() => setLogado(!logado)}>
-              {logado ? 'Sair' : 'Entrar'}
-            </button>
-          </div>
+
         </header>
 
         {/* Conteúdo principal */}
         <main className="saas-main">
           <Routes>
-            <Route path="/" element={<Navigate to="/cadastro" />} />
-            <Route path="/cadastro" element={<CadastroCliente />} />
-            <Route path="/historico" element={<LocalizarCliente />} />
+            <Route 
+              path="/" 
+              element={logado ? <Navigate to="/cadastro" /> : <Navigate to="/login" />} 
+            />
+            <Route 
+              path="/login" 
+              element={!logado ? <Login setLogado={setLogado} /> : <Navigate to="/cadastro" />} 
+            />
+            <Route 
+              path="/registrar" 
+              element={!logado ? <Register /> : <Navigate to="/cadastro" />} 
+            />
+            <Route 
+              path="/cadastro" 
+              element={logado ? <CadastroCliente /> : <Navigate to="/login" />} 
+            />
+            <Route 
+              path="/historico" 
+              element={logado ? <LocalizarCliente /> : <Navigate to="/login" />} 
+            />
           </Routes>
         </main>
 
         {/* Footer */}
         <footer className="saas-footer">
           <div className="footer-links">
-            <Link to="/cadastro">Cadastrar</Link>
-            <Link to="/historico">Buscar</Link>
+            {logado ? (
+              <>
+                <Link to="/cadastro">Cadastrar</Link>
+                <Link to="/historico">Buscar</Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login">Entrar</Link>
+                <Link to="/registrar">Registrar</Link>
+              </>
+            )}
             <a href="#">Suporte</a>
             <a href="#">Termos</a>
           </div>
