@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "./apiA";
 
 // cadastrar cliente
 export const criarCliente = (data) => {
