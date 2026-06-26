@@ -1,32 +1,26 @@
-import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_URL + "/clientes";
+import api from "./api";
 
 // cadastrar cliente
 export const criarCliente = (data) => {
-  return axios.post(API_URL, data);
+  return api.post("/clientes", data);
 };
 
 // localizar clientes
 export const localizarClientes = (nome, cpf) => {
-  return axios.get(`${API_URL}/`, {
+  return api.get("/clientes", {
     params: { nome, cpf },
   });
 };
 
 // obter histórico
 export const obterHistorico = (aggregate_id) => {
-  return axios.get(`${API_URL}/${aggregate_id}/eventos`);
+  return api.get(`/clientes/${aggregate_id}/eventos`);
 };
 
 // registrar dívida
-export const registrarDivida = (
-  aggregate_id,
-  valor,
-  descricao
-) => {
-  return axios.post(
-    `${API_URL}/${aggregate_id}/dividas`,
+export const registrarDivida = (aggregate_id, valor, descricao) => {
+  return api.post(
+    `/clientes/${aggregate_id}/dividas`,
     {
       valor,
       descricao,
@@ -40,21 +34,11 @@ export const registrarPagamento = (
   valor,
   forma_pagamento
 ) => {
-
-  console.log(
-    "Registrando pagamento:",
-    {
-      aggregate_id,
-      valor,
-      forma_pagamento
-    }
-  );
-
-  return axios.post(
-    `${API_URL}/${aggregate_id}/pagamentos`,
+  return api.post(
+    `/clientes/${aggregate_id}/pagamentos`,
     {
       valor,
-      forma_pagamento
+      forma_pagamento,
     }
   );
 };
