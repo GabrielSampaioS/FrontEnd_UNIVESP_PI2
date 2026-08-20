@@ -6,7 +6,7 @@ export const criarCliente = (data) => {
 };
 
 // localizar clientes
-export const localizarClientes = (nome, cpf) => {
+export const obterClientes = (nome, cpf) => {
   return api.get("/clientes", {
     params: { nome, cpf },
   });
